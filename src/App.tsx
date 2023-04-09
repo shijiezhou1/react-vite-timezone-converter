@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import moment from 'moment-timezone';
 import classNames from 'classnames';
@@ -47,6 +47,23 @@ const TimeRow = ({ timezone, timezoneIndex }: any) => {
 const ControlRow = ({ timezoneList, setTimezoneList }: any) => {
   const [cityName, setCityName] = useState(moment.tz.guess());
   const AddNewTimeZone = () => setTimezoneList([...timezoneList, ...[cityName]]);
+
+  useEffect(() => {
+    const keyDownHandler = (event: { key: string; preventDefault: () => void; }) => {
+      console.log('User pressed: ', event.key);
+
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        AddNewTimeZone();
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, [cityName]);
 
   return (
     <div className='control-row'>

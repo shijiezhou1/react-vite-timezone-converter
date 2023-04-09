@@ -78,7 +78,7 @@
 
 .each-item {
   width: 1.5em;
-  background-color: green; 
+  background-color: lightgreen; 
 }
 
 .each-item.active {
